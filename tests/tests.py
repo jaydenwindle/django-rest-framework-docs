@@ -1,6 +1,11 @@
-from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 from rest_framework_docs.settings import DRFSettings
+
+# Django 2.0 compatibility
+try:
+    from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
+except ImportError:
+    from django.urls import RegexURLResolver, RegexURLPattern
 
 
 class DRFDocsViewTests(TestCase):
