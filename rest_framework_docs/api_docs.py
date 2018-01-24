@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework_docs.api_endpoint import ApiEndpoint
 
 try:
-    from django.urls import URLPattern as RegexURLPattern, URLResolver as RegexURLResolver,
+    from django.urls import ( URLPattern as RegexURLPattern, URLResolver as RegexURLResolver )
 except ImportError:
     from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
 

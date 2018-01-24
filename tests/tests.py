@@ -2,7 +2,7 @@ from django.test import TestCase, override_settings
 from rest_framework_docs.settings import DRFSettings
 
 try:
-    from django.urls import URLPattern as RegexURLPattern, URLResolver as RegexURLResolver,
+    from django.urls import ( URLPattern as RegexURLPattern, URLResolver as RegexURLResolver )
 except ImportError:
     from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
 
