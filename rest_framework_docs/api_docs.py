@@ -10,6 +10,7 @@ except ImportError:
     from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
 
 
+
 class ApiDocumentation(object):
 
     def __init__(self, drf_router=None):
@@ -28,7 +29,7 @@ class ApiDocumentation(object):
     def get_all_view_names(self, urlpatterns, parent_regex=''):
         for pattern in urlpatterns:
             if isinstance(pattern, RegexURLResolver):
-                regex = '' if pattern._regex == "^" else pattern._regex
+                regex = '' if self.get_regex(pattern) == "^" else self.get_regex(pattern)
                 self.get_all_view_names(urlpatterns=pattern.url_patterns, parent_regex=parent_regex + regex)
             elif isinstance(pattern, RegexURLPattern) and self._is_drf_view(pattern) and not self._is_format_endpoint(pattern):
                 api_endpoint = ApiEndpoint(pattern, parent_regex, self.drf_router)
@@ -44,7 +45,15 @@ class ApiDocumentation(object):
         """
         Exclude endpoints with a "format" parameter
         """
-        return '?P<format>' in pattern._regex
+        return '?P<format>' in self.get_regex(pattern)
 
     def get_endpoints(self):
         return self.endpoints
+
+    def get_regex(self, resolver_or_pattern):
+        """Utility method for django's deprecated resolver.regex"""
+        try:
+            regex = resolver_or_pattern.regex
+        except AttributeError:
+            regex = resolver_or_pattern.pattern.regex
+        return regex
