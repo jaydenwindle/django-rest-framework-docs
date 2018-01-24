@@ -45,7 +45,7 @@ class ApiDocumentation(object):
         """
         Exclude endpoints with a "format" parameter
         """
-        return '?P<format>' in self.get_regex(pattern)
+        return '?P<format>' in str(self.get_regex(pattern))
 
     def get_endpoints(self):
         return self.endpoints
